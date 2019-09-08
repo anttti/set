@@ -3,4 +3,5 @@
 (def default-db
   {:deck []
    :dealt-cards []
-   :selected-cards []})
+   :selected-cards []
+   :score 0})

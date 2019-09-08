@@ -27,11 +27,23 @@
       (conj selected card)
       selected)))
 
+(defn remove-selected-card [cards card]
+  (filter (fn [c] (not (= (:key c) (:key card)))) cards))
+
 (rf/reg-event-db
   :select-card
   (fn [db [_ card]]
-    (if (= (count (:selected-cards db)) 3)
-      (do
-        (println "GOT THREE")
-        db)
-      (update db :selected-cards #(add-selected-card (:selected-cards db) card)))))
+    (let [new-selected-cards (add-selected-card (:selected-cards db) card)
+          new-dealt-cards (remove-selected-card (:dealt-cards db) card)]
+      (if (= (count new-selected-cards) 3)
+        (if (set/match? new-selected-cards)
+          (-> db
+            (assoc ,,, :selected-cards [])
+            (assoc ,,, :dealt-cards new-dealt-cards)
+            (update ,,, :score inc))
+          (-> db
+            (assoc ,,, :dealt-cards (flatten (conj (:selected-cards db) (:dealt-cards db))))
+            (assoc ,,, :selected-cards [])))
+        (-> db
+         (assoc ,,, :selected-cards new-selected-cards)
+         (assoc ,,, :dealt-cards new-dealt-cards))))))

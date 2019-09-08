@@ -20,3 +20,8 @@
   :cards-left
   (fn [db]
     (count (:deck db))))
+
+(rf/reg-sub
+  :score
+  (fn [db]
+    (:score db)))
