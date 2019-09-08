@@ -49,10 +49,8 @@
               (update ,,, :score inc)))
           (do
             (println "No match!")
-            (-> db
-              (assoc ,,, :selected-cards []))))
-        (-> db
-         (assoc ,,, :selected-cards new-selected-cards))))))
+            (assoc db :selected-cards [])))
+        (assoc db :selected-cards new-selected-cards)))))
 
 (rf/reg-event-db
   :deselect-card
