@@ -12,7 +12,6 @@
        [:ul
         (for [card dealt-cards]
           ^{:key card} [:li {:on-click #(rf/dispatch [:select-card card])}
-                        (:key card) ", "
                         (:shape card) ", "
                         (:color card) ", "
                         (:amount card) ", "
@@ -21,7 +20,6 @@
        [:ul
         (for [card selected-cards]
           ^{:key card} [:li
-                        (:key card) ", "
                         (:shape card) ", "
                         (:color card) ", "
                         (:amount card) ", "
