@@ -38,7 +38,6 @@
 
 (defn create-deck
   []
-  (println "Creating deck")
   (shuffle (map create-card (take 81 (range)))))
 
 (defn deal

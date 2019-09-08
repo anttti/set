@@ -16,7 +16,10 @@
 (rf/reg-event-db
   :deal
   (fn [db [_]]
-    db))
+    (let [[dealt deck] (split-at 18 (:deck db))]
+      (-> db
+        (assoc ,,, :dealt-cards dealt)
+        (assoc ,,, :deck deck)))))
 
 (defn add-selected-card [selected card]
   (let [is-selected-already (some #(= (:key card) %) (map :key selected))]

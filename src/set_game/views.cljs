@@ -3,12 +3,14 @@
 
 (defn play-area []
   (fn []
-    (let [deck @(rf/subscribe [:deck])
+    (let [dealt-cards @(rf/subscribe [:dealt-cards])
+          cards-left @(rf/subscribe [:cards-left])
           selected-cards @(rf/subscribe [:selected-cards])]
       [:section
-       [:input {:type "button" :value "Shuffle the deck" :on-click #(rf/dispatch [:shuffle])}]
+       [:p (str "Cards left: " cards-left)]
+       [:input {:type "button" :value "Deal 18" :on-click #(rf/dispatch [:deal])}]
        [:ul
-        (for [card (take 10 deck)]
+        (for [card dealt-cards]
           ^{:key card} [:li {:on-click #(rf/dispatch [:select-card card])}
                         (:shape card) ", "
                         (:color card) ", "

@@ -1,6 +1,6 @@
-(ns set-game.db
-  (:require [set-game.set :as set]))
+(ns set-game.db)
 
 (def default-db
-  {:deck (set/create-deck)
+  {:deck []
+   :dealt-cards []
    :selected-cards []})
