@@ -1,0 +1,22 @@
+{
+  "name": "set-game",
+  "version": "1.0.0",
+  "description": "Learning ClojureScript, Reagent and Re-frame by implementing a simple version of the card game Set.",
+  "main": "",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "css": "tailwind build src/styles/styles.css -o public/styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anttti/set.git"
+  },
+  "author": "Antti Mattila",
+  "license": "MIT",
+  "homepage": "https://github.com/anttti/set#readme",
+  "dependencies": {
+    "tailwindcss": "^1.1.2"
+  }
+}

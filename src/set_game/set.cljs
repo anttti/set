@@ -4,9 +4,9 @@
   [index]
   (let [i (mod index 9)]
     (cond
-      (<= i 2) :red
-      (<= i 5) :green
-      :else :blue)))
+      (<= i 2) "#E53E3E" ;; red
+      (<= i 5) "#38A169" ;; green
+      :else "#3182CE"))) ;; blue
 
 (defn get-shape
   [index]
@@ -25,7 +25,7 @@
 
 (defn get-fill
   [index]
-  (let [fills [:solid :striped :blank]]
+  (let [fills [:solid :dotted :blank]]
     (fills (mod index (count fills)))))
 
 (defn create-card

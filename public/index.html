@@ -4,14 +4,26 @@
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <link href="/css/site.css" rel="stylesheet" type="text/css">
+    <link href="/styles.css" rel="stylesheet" type="text/css">
   </head>
-  <body>
+  <body class="bg-gray-300">
+    <svg>
+      <defs>
+        <pattern id="dotted-#E53E3E" x="10" y="10" width="20" height="20" patternUnits="userSpaceOnUse" >
+          <circle cx="10" cy="10" r="7" style="stroke: none; fill: #E53E3E" />
+        </pattern>
+        <pattern id="dotted-#38A169" x="10" y="10" width="20" height="20" patternUnits="userSpaceOnUse" >
+          <circle cx="10" cy="10" r="7" style="stroke: none; fill: #38A169" />
+        </pattern>
+        <pattern id="dotted-#3182CE" x="10" y="10" width="20" height="20" patternUnits="userSpaceOnUse" >
+          <circle cx="10" cy="10" r="7" style="stroke: none; fill: #3182CE" />
+        </pattern>
+      </defs>
+    </svg>
     <div id="app">
       <h3>ClojureScript has not been compiled!</h3>
       <p>please run <b>lein figwheel</b> in order to start the compiler</p>
     </div>
     <script src="/js/app.js" type="text/javascript"></script>
-    
   </body>
 </html>
