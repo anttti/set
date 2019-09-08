@@ -7,7 +7,8 @@
    [set-game.views :refer [play-area]]))
 
 (defn app []
-  [:header [:h2 "Set"]
+  [:main
+   [:header [:h1.text-center.text-xl.text-gray-800.font-bold.uppercase.tracking-wider "Set"]]
    [play-area]])
 
 (defn mount-root []

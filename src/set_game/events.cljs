@@ -47,3 +47,12 @@
         (-> db
          (assoc ,,, :selected-cards new-selected-cards)
          (assoc ,,, :dealt-cards new-dealt-cards))))))
+
+(rf/reg-event-db
+  :deselect-card
+  (fn [db [_ card]]
+    (let [new-dealt-cards (add-selected-card (:dealt-cards db) card)
+          new-selected-cards (remove-selected-card (:selected-cards db) card)]
+      (-> db
+        (assoc ,,, :dealt-cards new-dealt-cards)
+        (assoc ,,, :selected-cards new-selected-cards)))))

@@ -6,8 +6,8 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="/styles.css" rel="stylesheet" type="text/css">
   </head>
-  <body class="bg-gray-300">
-    <svg>
+  <body class="bg-gray-300 overflow-y-scroll">
+    <svg style="height: 1px; width: 1px;">
       <defs>
         <pattern id="dotted-#E53E3E" x="10" y="10" width="20" height="20" patternUnits="userSpaceOnUse" >
           <circle cx="10" cy="10" r="7" style="stroke: none; fill: #E53E3E" />
@@ -20,7 +20,7 @@
         </pattern>
       </defs>
     </svg>
-    <div id="app">
+    <div id="app" class="max-w-4xl mx-auto my-6">
       <h3>ClojureScript has not been compiled!</h3>
       <p>please run <b>lein figwheel</b> in order to start the compiler</p>
     </div>
