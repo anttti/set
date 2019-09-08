@@ -1,4 +1,5 @@
-(ns set-game.set)
+(ns set-game.set
+  (:require [clojure.math.combinatorics :as combinatorics]))
 
 (defn get-color
   [index]
@@ -59,3 +60,7 @@
        (attribute-match? (map :shape cards))
        (attribute-match? (map :fill cards))
        (attribute-match? (map :amount cards))))
+
+(defn get-matches [cards]
+  (let [sets (combinatorics/combinations cards 3)]
+    (filter match? sets)))

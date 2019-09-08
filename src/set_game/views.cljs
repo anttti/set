@@ -7,10 +7,12 @@
     (= (:fill card) :dotted) (str "url(#dotted-" (name (:color card)) ")")
     (= (:fill card) :blank) "none"))
 
-(defn- render-card [card on-click]
-  (fn []
+(defn- render-card [card is-selected on-click]
+  (fn [card is-selected on-click]
     (let [fill (get-fill card)]
-      [:div.w-40.h-20.m-2.p-4.flex.flex-col.items-center.justify-center.rounded.shadow-lg.bg-white {:on-click on-click}
+      [:div.w-40.h-20.m-2.p-4.flex.flex-col.items-center.justify-center.rounded.shadow-lg.bg-white
+       {:on-click on-click
+        :class (if is-selected "border-gray-500 border-4")}
        [:div.flex.flex-row
         (for [i (range (:amount card))]
           ^{:key i} [:svg.m-1 {:width "30px" :height "30px" :view-box "0 0 180 180"}
@@ -26,15 +28,18 @@
   (fn []
     (let [dealt-cards @(rf/subscribe [:dealt-cards])
           cards-left @(rf/subscribe [:cards-left])
-          selected-cards @(rf/subscribe [:selected-cards])]
+          selected-cards @(rf/subscribe [:selected-cards])
+          possible-sets-left @(rf/subscribe [:possible-sets-left])]
       [:section
        [:div.mb-4.text-center
-        [:p.mb-2.text-sm.uppercase.tracking-wide.font-bold.text-gray-600 (str "Cards left: " cards-left)]
-        [:input.py-2.px-4.rounded.bg-white.shadow-lg.uppercase.tracking-wide.font-bold.text-gray-600 {:type "button" :value "Deal 18" :on-click #(rf/dispatch [:deal])}]]
+        [:p.mb-2.text-sm.uppercase.tracking-wide.font-bold.text-gray-600
+         (str "Possible sets left: " possible-sets-left)]
+        [:input.py-2.px-4.rounded.bg-white.shadow-lg.uppercase.tracking-wide.font-bold.text-gray-600
+         {:type "button"
+          :value (str "Deal 18 (" cards-left " left)")
+          :on-click #(rf/dispatch [:deal])}]]
        [:div.flex.flex-row.flex-wrap
         (for [card dealt-cards]
-          ^{:key card} [render-card card #(rf/dispatch [:select-card card])])]
-       [:h6 "Selected"]
-       [:div.flex.flex-row.flex-wrap
-        (for [card selected-cards]
-          ^{:key card} [render-card card #(rf/dispatch [:deselect-card card])])]])))
+          (let [is-selected (some #(= (:key card) %) (map :key selected-cards))
+                on-click-arg (if is-selected [:deselect-card card] [:select-card card])]
+            ^{:key card} [render-card card is-selected #(rf/dispatch on-click-arg)]))]])))

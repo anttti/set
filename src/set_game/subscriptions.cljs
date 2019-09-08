@@ -1,5 +1,6 @@
 (ns set-game.subscriptions
-  (:require [re-frame.core :as rf]))
+  (:require [re-frame.core :as rf]
+            [set-game.set :as set]))
 
 (rf/reg-sub
   :deck
@@ -25,3 +26,8 @@
   :score
   (fn [db]
     (:score db)))
+
+(rf/reg-sub
+  :possible-sets-left
+  (fn [db]
+    (count (set/get-matches (:dealt-cards db)))))

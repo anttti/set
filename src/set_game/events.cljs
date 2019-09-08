@@ -28,31 +28,35 @@
       selected)))
 
 (defn remove-selected-card [cards card]
-  (filter (fn [c] (not (= (:key c) (:key card)))) cards))
+  ())
+
+(defn remove-selected-cards [selected-cards dealt-cards]
+  (let [selected-keys (map :key selected-cards)]
+    (filter (fn [c] (not (some #(= (:key c) %) selected-keys))))))
 
 (rf/reg-event-db
   :select-card
   (fn [db [_ card]]
-    (let [new-selected-cards (add-selected-card (:selected-cards db) card)
-          new-dealt-cards (remove-selected-card (:dealt-cards db) card)]
+    (println "Select" card)
+    (let [new-selected-cards (add-selected-card (:selected-cards db) card)]
       (if (= (count new-selected-cards) 3)
         (if (set/match? new-selected-cards)
-          (-> db
-            (assoc ,,, :selected-cards [])
-            (assoc ,,, :dealt-cards new-dealt-cards)
-            (update ,,, :score inc))
-          (-> db
-            (assoc ,,, :dealt-cards (flatten (conj (:selected-cards db) (:dealt-cards db))))
-            (assoc ,,, :selected-cards [])))
+          (do
+            (println "Match!")
+            (-> db
+              (assoc ,,, :selected-cards [])
+              (assoc ,,, :dealt-cards (remove-selected-cards (:selected-cards db) (:dealt-cards db)))
+              (update ,,, :score inc)))
+          (do
+            (println "No match!")
+            (-> db
+              (assoc ,,, :selected-cards []))))
         (-> db
-         (assoc ,,, :selected-cards new-selected-cards)
-         (assoc ,,, :dealt-cards new-dealt-cards))))))
+         (assoc ,,, :selected-cards new-selected-cards))))))
 
 (rf/reg-event-db
   :deselect-card
   (fn [db [_ card]]
-    (let [new-dealt-cards (add-selected-card (:dealt-cards db) card)
-          new-selected-cards (remove-selected-card (:selected-cards db) card)]
-      (-> db
-        (assoc ,,, :dealt-cards new-dealt-cards)
-        (assoc ,,, :selected-cards new-selected-cards)))))
+    (println "Deselect" card)
+    (let [new-selected-cards (remove-selected-card (:selected-cards db) card)]
+      (assoc db :selected-cards new-selected-cards))))
