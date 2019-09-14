@@ -31,22 +31,29 @@
   (let [selected-keys (map :key selected-cards)]
     (filter (fn [c] (not (some #(= (:key c) %) selected-keys))) dealt-cards)))
 
+(defn replace-missing-cards [dealt-cards deck]
+  (let [missing-amount (- 18 (count dealt-cards))
+        [newly-drawn deck] (split-at missing-amount deck)]
+    [(flatten (conj newly-drawn dealt-cards)) deck]))
+
+(defn calculate-dealt-cards [selected-cards dealt-cards deck]
+  (let [without-selected (remove-selected-cards selected-cards dealt-cards)
+        [with-newly-drawn deck] (replace-missing-cards without-selected deck)]
+    [with-newly-drawn deck]))
+
 (rf/reg-event-db
   :select-card
   (fn [db [_ card]]
-    (println "Select" card)
     (let [new-selected-cards (add-selected-card (:selected-cards db) card)]
       (if (= (count new-selected-cards) 3)
         (if (set/match? new-selected-cards)
-          (do
-            (println "Match!")
+          (let [[dealt-cards deck] (calculate-dealt-cards new-selected-cards (:dealt-cards db) (:deck db))]
             (-> db
-              (assoc ,,, :dealt-cards (remove-selected-cards new-selected-cards (:dealt-cards db)))
+              (assoc ,,, :dealt-cards dealt-cards)
+              (assoc ,,, :deck deck)
               (assoc ,,, :selected-cards [])
               (update ,,, :score inc)))
-          (do
-            (println "No match!")
-            (assoc db :selected-cards [])))
+          (assoc db :selected-cards []))
         (assoc db :selected-cards new-selected-cards)))))
 
 (rf/reg-event-db
