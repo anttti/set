@@ -10,7 +10,7 @@
 (defn- render-card [card is-selected on-click]
   (fn [card is-selected on-click]
     (let [fill (get-fill card)]
-      [:div.w-24.h-16.m-2.p-4.flex.flex-col.items-center.justify-center.rounded.shadow-lg.bg-white
+      [:div.w-24.h-16.m-2.flex.flex-col.items-center.justify-center.rounded.shadow-lg.bg-white
        {:on-click on-click
         :class (if is-selected "border-gray-500 border-4")}
        [:div.flex.flex-row
