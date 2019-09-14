@@ -31,3 +31,13 @@
   :possible-sets-left
   (fn [db]
     (count (set/get-matches (:dealt-cards db)))))
+
+(rf/reg-sub
+  :is-game-on
+  (fn [db]
+    (:is-game-on db)))
+
+(rf/reg-sub
+  :time-elapsed
+  (fn [db]
+    (:time-elapsed db)))

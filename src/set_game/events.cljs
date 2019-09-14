@@ -9,13 +9,20 @@
     db/default-db))
 
 (rf/reg-event-db
+  :start-game
+  (fn [db _]
+    (-> db
+      (assoc ,,, :time-elapsed 0)
+      (assoc ,,, :is-game-on true))))
+
+(rf/reg-event-db
   :shuffle
   (fn [db _]
     (assoc db :deck (set/create-deck))))
 
 (rf/reg-event-db
   :deal
-  (fn [db [_]]
+  (fn [db _]
     (let [[dealt deck] (split-at 18 (:deck db))]
       (-> db
         (assoc ,,, :dealt-cards dealt)
