@@ -8,7 +8,8 @@
                  [org.clojure/clojurescript "1.10.520"]
                  [org.clojure/math.combinatorics "0.1.6"]
                  [reagent "0.8.1"]
-                 [re-frame "0.10.9"]]
+                 [re-frame "0.10.9"]
+                 [re-pollsive "0.1.0"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-figwheel "0.5.19"]]

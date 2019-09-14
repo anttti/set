@@ -12,6 +12,7 @@
   :start-game
   (fn [db _]
     (-> db
+      (assoc ,,, :score 0)
       (assoc ,,, :time-elapsed 0)
       (assoc ,,, :is-game-on true))))
 
@@ -27,6 +28,11 @@
       (-> db
         (assoc ,,, :dealt-cards dealt)
         (assoc ,,, :deck deck)))))
+
+(rf/reg-event-db
+  :second-passed
+  (fn [db _]
+    (update db :time-elapsed inc)))
 
 (defn add-selected-card [selected card]
   (let [is-selected-already (some #(= (:key card) %) (map :key selected))]

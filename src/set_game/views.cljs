@@ -61,12 +61,13 @@
           selected-cards @(rf/subscribe [:selected-cards])
           possible-sets-left @(rf/subscribe [:possible-sets-left])
           is-game-on @(rf/subscribe [:is-game-on])
-          time-elapsed @(rf/subscribe [:time-elapsed])]
+          time-elapsed @(rf/subscribe [:time-elapsed])
+          score @(rf/subscribe [:score])]
       [:section.flex.flex-col.items-center
        [:div.h-16.flex.flex-col.justify-center
         (if is-game-on
           [:p.mb-2.text-sm.uppercase.tracking-wide.font-bold.text-gray-700
-            (str "Possible #{}s left: " possible-sets-left)]
+            (str "#{}s left: " possible-sets-left " – Score: " score " – Time: " time-elapsed)]
           [button #(rf/dispatch [:start-game]) "Start game"])]
        [:div.mb-8.flex.flex-row.flex-wrap.justify-center
         (for [card dealt-cards]
