@@ -32,7 +32,7 @@
 
 (defn remove-selected-cards [selected-cards dealt-cards]
   (let [selected-keys (map :key selected-cards)]
-    (filter (fn [c] (not (some #(= (:key c) %) selected-keys))))))
+    (filter (fn [c] (not (some #(= (:key c) %) selected-keys))) dealt-cards)))
 
 (rf/reg-event-db
   :select-card
@@ -44,8 +44,8 @@
           (do
             (println "Match!")
             (-> db
+              (assoc ,,, :dealt-cards (remove-selected-cards new-selected-cards (:dealt-cards db)))
               (assoc ,,, :selected-cards [])
-              (assoc ,,, :dealt-cards (remove-selected-cards (:selected-cards db) (:dealt-cards db)))
               (update ,,, :score inc)))
           (do
             (println "No match!")
