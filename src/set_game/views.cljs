@@ -27,17 +27,12 @@
 (defn play-area []
   (fn []
     (let [dealt-cards @(rf/subscribe [:dealt-cards])
-          cards-left @(rf/subscribe [:cards-left])
           selected-cards @(rf/subscribe [:selected-cards])
           possible-sets-left @(rf/subscribe [:possible-sets-left])]
       [:section
        [:div.mb-4.text-center
         [:p.mb-2.text-sm.uppercase.tracking-wide.font-bold.text-gray-600
-         (str "Possible sets left: " possible-sets-left)]
-        [:input.py-2.px-4.rounded.bg-white.shadow-lg.uppercase.tracking-wide.font-bold.text-gray-600
-         {:type "button"
-          :value (str "Deal 18 (" cards-left " left)")
-          :on-click #(rf/dispatch [:deal])}]]
+         (str "Possible sets left: " possible-sets-left)]]
        [:div.flex.flex-row.flex-wrap
         (for [card dealt-cards]
           (let [is-selected (some #(= (:key card) %) (map :key selected-cards))
