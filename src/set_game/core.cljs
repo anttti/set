@@ -8,7 +8,7 @@
 
 (defn app []
   [:main
-   [:header [:h1.text-center.text-xl.text-gray-800.font-bold.uppercase.tracking-wider "Set"]]
+   [:header [:h1.text-center.text-xl.text-gray-800.font-bold.uppercase.tracking-wider "#{}"]]
    [play-area]])
 
 (defn mount-root []

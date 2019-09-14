@@ -29,12 +29,21 @@
     (let [dealt-cards @(rf/subscribe [:dealt-cards])
           selected-cards @(rf/subscribe [:selected-cards])
           possible-sets-left @(rf/subscribe [:possible-sets-left])]
-      [:section
+      [:section.flex.flex-col.items-center
        [:div.mb-4.text-center
         [:p.mb-2.text-sm.uppercase.tracking-wide.font-bold.text-gray-600
-         (str "Possible sets left: " possible-sets-left)]]
-       [:div.flex.flex-row.flex-wrap
+         (str "Possible #{}s left: " possible-sets-left)]]
+       [:div.mb-8.flex.flex-row.flex-wrap.justify-center
         (for [card dealt-cards]
           (let [is-selected (some #(= (:key card) %) (map :key selected-cards))
                 on-click-arg (if is-selected [:deselect-card card] [:select-card card])]
-            ^{:key card} [render-card card is-selected #(rf/dispatch on-click-arg)]))]])))
+            ^{:key card} [render-card card is-selected #(rf/dispatch on-click-arg)]))]
+       [:section.max-w-lg.rounded.text-gray-600.text-sm
+        [:p.mb-3 "A #{} consists of three cards satisfying all of these conditions:"]
+        [:ul.mb-3.list-decimal.list-inside
+         [:li "They all have the same number or have three different numbers."]
+         [:li "They all have the same shape or have three different shapes."]
+         [:li "They all have the same shading or have three different shadings."]
+         [:li "They all have the same color or have three different colors."]]
+        [:p "The rules of #{} are summarized by: "
+         [:i "If you can sort a group of three cards into \"two of ____ and one of ____\", then it is not a #{}."]]]])))
