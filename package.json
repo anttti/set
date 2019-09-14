@@ -7,7 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "css": "tailwind build src/styles/styles.css -o public/styles.css"
+    "css": "tailwind build src/styles/styles.css -o public/styles.css",
+    "purgecss": "purgecss --config purgecss.config.js --out public",
+    "dev": "npm run css && lein figwheel",
+    "build": "npm run css && npm run purgecss && lein package"
   },
   "repository": {
     "type": "git",
@@ -18,5 +21,8 @@
   "homepage": "https://github.com/anttti/set#readme",
   "dependencies": {
     "tailwindcss": "^1.1.2"
+  },
+  "devDependencies": {
+    "purgecss": "^1.4.0"
   }
 }

@@ -1,13 +1,15 @@
-# Set game in ClojureScript
+# #{} game in ClojureScript
 
-Learning ClojureScript, Reagent and Re-frame by implementing a simple version of the card game Set.
+Learning ClojureScript, Reagent and Re-frame by implementing a simple version of the card game #{} (Set. Ha-ha. Please do not sue me.).
 
 ## Development mode
 To start the Figwheel compiler, navigate to the project folder and run the following command in the terminal:
 
 ```
-lein figwheel
+npm run dev
 ```
+
+It will build the CSS, start Figwheel and open the app in your browser.
 
 ## REPL
 
@@ -17,6 +19,5 @@ Once you connect to the nREPL, run `(cljs)` to switch to the ClojureScript REPL.
 ### Building for production
 
 ```
-lein clean
-lein package
+npm run build
 ```
