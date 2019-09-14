@@ -27,9 +27,6 @@
       (conj selected card)
       selected)))
 
-(defn remove-selected-card [cards card]
-  ())
-
 (defn remove-selected-cards [selected-cards dealt-cards]
   (let [selected-keys (map :key selected-cards)]
     (filter (fn [c] (not (some #(= (:key c) %) selected-keys))) dealt-cards)))
@@ -56,5 +53,5 @@
   :deselect-card
   (fn [db [_ card]]
     (println "Deselect" card)
-    (let [new-selected-cards (remove-selected-card (:selected-cards db) card)]
+    (let [new-selected-cards (remove-selected-cards [card] (:selected-cards db))]
       (assoc db :selected-cards new-selected-cards))))
